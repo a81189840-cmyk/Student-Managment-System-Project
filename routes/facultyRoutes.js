@@ -1,0 +1,11 @@
+import express from 'express';
+import {getAllFaculty,getFacultyById,createFaculty,updateFaculty,deleteFaculty} from '../controllers/facultyController.js';
+import { validateFaculty } from '../middleware/validationMiddleware.js';
+import {protect,authorizeRoles} from '../middleware/authMiddleware.js';
+const router = express.Router();
+router.get('/faculty', getAllFaculty);
+router.get('/faculty/:id', getFacultyById);
+router.post('/faculty',protect,authorizeRoles('admin'),validateFaculty,createFaculty);
+router.put('/faculty/:id',protect,authorizeRoles('admin'),updateFaculty);
+router.delete('/faculty/:id', protect, authorizeRoles('admin'), deleteFaculty);
+export default router;
